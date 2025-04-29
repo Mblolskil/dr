@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Для Самой Особенной</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@700&family=Playball&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(45deg, #ff7eb3, #ff758c),
+            url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIklEQVQIW2NkQAKrVq36zwjjgzhhYWGMYAEYB8RmROaABADeOQ8CXl/xfgAAAABJRU5ErkJggg==');
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playball', cursive;
+            overflow: auto;
+        }
+
+        .container {
+            position: relative;
+            text-align: center;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .heart {
+            font-size: 15vw;
+            color: #fff;
+            cursor: pointer;
+            animation: heartbeat 1.2s infinite;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .click-text {
+            color: white;
+            margin-top: 2vh;
+            font-size: 3vh;
+            opacity: 0.8;
+            animation: pulse 2s infinite;
+        }
+
+        .letter {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 5vh 4vw;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 80%;
+            max-width: 800px;
+            margin: 5vh auto;
+            transform: scale(0);
+            transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #ff758c;
+            transition: transform 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: rotate(90deg) scale(1.2);
+        }
+
+        .letter.active {
+            display: block;
+            transform: scale(1);
+        }
+
+        .letter h1 {
+            font-family: 'Tangerine', cursive;
+            font-size: 8vh;
+            color: #ff4757;
+            margin-bottom: 3vh;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .letter p {
+            font-size: 2.8vh;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 3vh;
+            text-align: center;
+            hyphens: auto;
+            word-wrap: break-word;
+            padding: 0 2vw;
+        }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 5vh;
+            color: #ff6b81;
+            text-align: right;
+            margin-top: 4vh;
+            letter-spacing: 2px;
+        }
+
+        .gift-box {
+            display: none;
+            position: relative;
+            margin: 30px auto;
+            cursor: pointer;
+            transition: all 0.5s ease;
+        }
+
+        .gift-box.active {
+            display: block;
+        }
+
+        .gift-certificate {
+            background: linear-gradient(135deg, #fff5f5, #ffffff);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #ff6b81;
+            background-image: url('https://i.ibb.co/3zqY8Lp/floral.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .gift-certificate:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,107,129,0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        .gift-certificate:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .certificate-content {
+            position: relative;
+            z-index: 1;
+            background: rgba(255,255,255,0.9);
+            padding: 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(3px);
+        }
+
+        .certificate-title {
+            font-family: 'Tangerine', cursive;
+            font-size: 48px;
+            color: #ff6b81;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .certificate-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            color: #2d3436;
+            text-align: center;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        .ferrari-img {
+            width: 200px;
+            margin: 20px auto;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+            transition: transform 0.5s ease;
+        }
+
+        .ferrari-img:hover {
+            transform: scale(1.05) rotate(-2deg);
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.3); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shine {
+            0% { left: -50%; }
+            100% { left: 150%; }
+        }
+
+        @media (max-width: 768px) {
+            .letter {
+                width: 90%;
+                padding: 4vh 5vw;
+            }
+
+            .letter h1 {
+                font-size: 6vh;
+            }
+
+            .letter p {
+                font-size: 2.5vh;
+            }
+
+            .certificate-title {
+                font-size: 36px;
+            }
+
+            .certificate-text {
+                font-size: 22px;
+            }
+
+            .ferrari-img {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="heart" onclick="showLetter()">❤️</div>
+    <div class="click-text">Нажми на меня</div>
+
+    <div class="letter" id="letter">
+        <span class="close-btn" onclick="closeLetter()">×</span>
+        <h1>Для Самой Прекрасной Девушки</h1>
+        <p>Дорогая Ирина Феррари Ирушкина💌,<br><br>
+            Ты - самая удивительная девушка, которую я когда-либо встречал. Твоя красота затмевает солнечный свет, а доброта согревает лучше любого огня. Улыбайся чаще, ведь тебе оно очень идёт) Желаю много счастья, неважно сколько счастья, важно сколько счастья в каждом дне.<br><br>
+             Ты сделала мою жизнь настоящей сказкой, и я обещаю делать всё возможное чтобы растояние стало меньше, чтобы и твоя жизнь была наполнена счастьем и волшебством.</p>
+        <div class="signature">это был я, WEREEEWQ_CRY</div>
+
+        <div class="gift-box" id="giftBox">
+            <div class="gift-certificate">
+                <div class="certificate-content">
+                    <h2 class="certificate-title">Сертификат На Мечту</h2>
+                    <img src="https://cdn1.ozone.ru/s3/multimedia-8/c600/6474751988.jpg" alt="KIA K5" class="ferrari-img">
+                    <p class="certificate-text">
+                        Обладательница получает:<br>
+                        KIA K5 <br>
+                        С пожизненной гарантией счастья<br>
+                        И вечной любовью
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showLetter() {
+        document.querySelector('.heart').style.display = 'none';
+        document.querySelector('.click-text').style.display = 'none';
+        document.getElementById('letter').classList.add('active');
+        document.getElementById('giftBox').classList.add('active');
+        createConfetti();
+    }
+
+    function closeLetter() {
+        document.getElementById('letter').classList.remove('active');
+        document.querySelector('.heart').style.display = 'block';
+        document.querySelector('.click-text').style.display = 'block';
+    }
+
+    function createConfetti() {
+        const colors = ['#ff6b81', '#ffa502', '#2ed573', '#1e90ff', '#ff4757'];
+        for(let i = 0; i < 150; i++) {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.width = '12px';
+            confetti.style.height = '12px';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = '-20px';
+            confetti.style.borderRadius = '50%';
+            confetti.style.zIndex = '999';
+            confetti.style.opacity = '0.8';
+            document.body.appendChild(confetti);
+
+            confetti.animate([
+                {
+                    transform: `translate(${Math.random() * 100 - 50}px, 0) rotate(0deg)`,
+                    opacity: 1
+                },
+                {
+                    transform: `translate(${Math.random() * 100 - 50}px, ${window.innerHeight + 100}px) rotate(${360 * 3}deg)`,
+                    opacity: 0
+                }
+            ], {
+                duration: 3000 + Math.random() * 2000,
+                easing: 'cubic-bezier(.1,.7,.4,1)'
+            }).onfinish = () => confetti.remove();
+        }
+    }
+</script>
+</body>
+</html>
